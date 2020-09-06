@@ -1,0 +1,40 @@
+name: ${project.artifactId}
+main: com.mcmiddleearth.moderation.ModerationPlugin
+version: ${project.version}
+author: Eriol_Eandur
+
+commands:
+  watchlist:
+    description: watchlist management
+    aliases: watch
+    permission: mcmemoderation.watchlist
+    permission-message: Sorry, you don't have permission.
+    usage: /watchlist list|add|remove
+  report:
+    description: reporting other players
+    permission: mcmemoderation.report
+    permission-message: Sorry, you don't have permission.
+    usage: /watchlist list|add|remove
+permissions:
+  mcmemoderation.watchlist.*:
+    description: allows to use all watchlist features
+    default: op
+    children:
+      mcmemoderation.watchlist: true
+      mcmemoderation.watchlist.add: true
+  mcmemoderation.watchlist.add:
+    description: allows a player to add watchlist entries
+    default: op
+    children:
+      mcmemoderation.watchlist: true
+  mcmemoderation.watchlist:
+    description: allows a player to see watchlist command
+    default: op
+  mcmemoderation.report:
+    description: allows a player to report other players
+    default: true
+  mcmemoderation.report.see:
+    description: allows a moderator to see reports
+    default: op
+    children:
+      mcmemoderation.report: true

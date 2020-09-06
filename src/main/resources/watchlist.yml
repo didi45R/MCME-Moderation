@@ -1,0 +1,18 @@
+fedf6ee0-8573-4588-89cf-5951e2596795:
+  - creationTime: Sep 1, 2020, 6:37:21 PM
+    initiator: fedf6ee0-8573-4588-89cf-5951e2596795
+    description: Reporting myself just for example
+    byModerator: true
+  - creationTime: Sep 1, 2020, 6:37:21 PM
+    initiator: fedf6ee0-8573-4588-89cf-5951e2596795
+    description: Doing it again
+    byModerator: true
+  - creationTime: Sep 1, 2020, 6:37:21 PM
+    initiator: 6ccb9475-b8c8-4f03-825e-b4104d1b7613
+    description: Example report by /report command
+    byModerator: false
+6ccb9475-b8c8-4f03-825e-b4104d1b7613:
+  - creationTime: Sep 1, 2020, 6:37:21 PM
+    initiator: fedf6ee0-8573-4588-89cf-5951e2596795
+    description: reported me
+    byModerator: true

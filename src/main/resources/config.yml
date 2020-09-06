@@ -1,0 +1,13 @@
+report:
+  sendIngame: true
+  sendDiscord: true
+  discordChannel: reports
+  pingModerators: false
+  addToWatchlist: true
+watchlist:
+  playerJoinNotification:
+    sendIngame: true
+    sendDiscord: true
+    discordChannel: reports
+    pingModerators: false
+  tabListPrefix: "#ff8866W"
