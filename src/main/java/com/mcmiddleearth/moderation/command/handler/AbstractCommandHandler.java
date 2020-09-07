@@ -1,4 +1,4 @@
-package com.mcmiddleearth.moderation.command;
+package com.mcmiddleearth.moderation.command.handler;
 
 public class AbstractCommandHandler {
 

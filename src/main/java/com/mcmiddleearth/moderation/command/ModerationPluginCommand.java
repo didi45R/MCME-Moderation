@@ -2,6 +2,7 @@ package com.mcmiddleearth.moderation.command;
 
 import com.google.common.base.Joiner;
 import com.mcmiddleearth.moderation.ModerationPlugin;
+import com.mcmiddleearth.moderation.command.handler.AbstractCommandHandler;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.ParseResults;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -14,9 +15,8 @@ import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.TabCompleteEvent;
 import net.md_5.bungee.api.plugin.Command;
-import net.md_5.bungee.api.plugin.Listener;
-import net.md_5.bungee.event.EventHandler;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -49,8 +49,9 @@ public class ModerationPluginCommand extends Command {
                     String parsedCommand = "/" + result.getReader().getString()
                             .substring(0, result.getContext().getRange().getEnd());
 
-                    Collection<CommandNode<CommandSender>> children = result.getContext().getNodes()
-                            .get(result.getContext().getNodes().size() - 1).getNode().getChildren();
+                    Collection<CommandNode<CommandSender>> children = (result.getContext().getNodes().isEmpty()?new ArrayList<>():
+                            result.getContext().getNodes().get(result.getContext().getNodes().size() - 1).getNode().getChildren()
+                                    .stream().filter(node -> node.canUse(result.getContext().getSource())).collect(Collectors.toList()));
                     if (children.isEmpty()) {
                         if (result.getContext().getCommand() == null) {
                             helpMessage = new StringBuilder("Invalid command. Maybe you don't have permission.");

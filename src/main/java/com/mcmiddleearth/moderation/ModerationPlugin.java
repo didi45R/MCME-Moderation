@@ -16,18 +16,14 @@
  */
 package com.mcmiddleearth.moderation;
 
-import com.mcmiddleearth.moderation.command.AbstractCommandHandler;
 import com.mcmiddleearth.moderation.command.ModerationPluginCommand;
-import com.mcmiddleearth.moderation.command.ReportCommandHandler;
-import com.mcmiddleearth.moderation.command.WatchlistCommandHandler;
+import com.mcmiddleearth.moderation.command.handler.ReportCommandHandler;
+import com.mcmiddleearth.moderation.command.handler.WatchlistCommandHandler;
 import com.mcmiddleearth.moderation.configuration.ModerationConfig;
 import com.mcmiddleearth.moderation.watchlist.WatchlistManager;
 import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.suggestion.Suggestion;
-import com.mojang.brigadier.suggestion.Suggestions;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.TabCompleteEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.api.plugin.Plugin;
@@ -38,11 +34,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Set;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 /**
  *
@@ -78,7 +71,7 @@ public class ModerationPlugin extends Plugin implements Listener {
         commands.forEach(command -> ProxyServer.getInstance().getPluginManager()
                 .registerCommand(this, command));
 
-                        //Listener for tab complete
+        //Listener for tab complete
         ProxyServer.getInstance().getPluginManager().registerListener(this,this);
         watchlistManager = new WatchlistManager();
     }

@@ -14,17 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mcmiddleearth.moderation.command;
+package com.mcmiddleearth.moderation.command.handler;
 
 
-import com.mcmiddleearth.moderation.ModerationPlugin;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
-import net.md_5.bungee.api.plugin.Command;
 
 import java.util.logging.Logger;
 
@@ -33,7 +31,7 @@ import java.util.logging.Logger;
  * @author Eriol_Eandur
  */
 
-public class WatchlistCommandHandler extends AbstractCommandHandler{
+public class WatchlistCommandHandler extends AbstractCommandHandler {
 
     public WatchlistCommandHandler(String name, CommandDispatcher<CommandSender> dispatcher) {
         super(name);

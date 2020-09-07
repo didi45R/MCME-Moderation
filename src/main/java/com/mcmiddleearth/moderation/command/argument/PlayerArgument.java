@@ -38,7 +38,7 @@ import java.util.stream.Collectors;
  * @author Eriol_Eandur
  */
 
-public class PlayerArgument implements ArgumentType<String> {
+public class PlayerArgument implements HelpfulArgument {
 
     @Override
     public String parse(StringReader reader) throws CommandSyntaxException {
@@ -61,6 +61,16 @@ public class PlayerArgument implements ArgumentType<String> {
         for (String option : ProxyServer.getInstance().getPlayers().stream().map(ProxiedPlayer::getName).collect(Collectors.toSet())) {
             if (option.toLowerCase().startsWith(builder.getRemaining().toLowerCase())) {
                 builder.suggest(option);
+            }
+        }
+        return builder.buildFuture();
+    }
+
+    public <S> CompletableFuture<Suggestions> listSuggestions(final CommandContext<S> context, final SuggestionsBuilder builder, String usageText) {
+        Logger.getGlobal().info("CommandPlayerArgument Start");
+        for (String option : ProxyServer.getInstance().getPlayers().stream().map(ProxiedPlayer::getName).collect(Collectors.toSet())) {
+            if (option.toLowerCase().startsWith(builder.getRemaining().toLowerCase())) {
+                builder.suggest(option, new LiteralMessage(usageText));
             }
         }
         return builder.buildFuture();

@@ -14,9 +14,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mcmiddleearth.moderation.command;
+package com.mcmiddleearth.moderation.command.handler;
 
-import com.mcmiddleearth.moderation.ModerationPlugin;
 import com.mcmiddleearth.moderation.Permission;
 import com.mcmiddleearth.moderation.command.argument.PlayerArgument;
 import com.mcmiddleearth.moderation.command.builder.HelpfulLiteralBuilder;
@@ -25,7 +24,6 @@ import com.mojang.brigadier.CommandDispatcher;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.ComponentBuilder;
-import net.md_5.bungee.api.plugin.Command;
 
 import static com.mojang.brigadier.arguments.StringArgumentType.greedyString;
 
@@ -47,9 +45,9 @@ public class ReportCommandHandler extends AbstractCommandHandler {
                         .executes(context -> sendHelpMessage(context.getSource()))
                     .then(HelpfulRequiredArgumentBuilder.argument("player", new PlayerArgument())
                         .withUsageText("Player needs to be online.")
-                        .suggests((context,suggestionsBuilder) ->
-                            suggestionsBuilder.suggest("Enter your reason to report "+context.getArgument("player",String.class)).buildFuture())
                         .then(HelpfulRequiredArgumentBuilder.argument("reason", greedyString())
+                            .suggests((context,suggestionsBuilder) ->
+                                suggestionsBuilder.suggest("Enter your reason to report "+context.getArgument("player",String.class)).buildFuture())
                             .executes(context -> sendReport(context.getSource(), context.getArgument("player",String.class),
                                                             context.getArgument("reason", String.class)))))));
     }
