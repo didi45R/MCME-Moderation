@@ -37,19 +37,34 @@ public class ReportCommandHandler extends AbstractCommandHandler {
         super(name);
         dispatcher.register(HelpfulLiteralBuilder
                 .literal(name)
-                    .withUsageText("Report other players to Moderators.")
+                    .withTooltip("Send a report to Moderators about inappropriate player behaviour.")
+                    .withHelpText("Report inappropriate behaviour.")
                     .requires(commandSender -> commandSender.hasPermission(Permission.SEND_REPORT))
-                    .executes(context -> sendHelpMessage(context.getSource()))
-                    .then(HelpfulLiteralBuilder.literal("help")
-                        .withUsageText("Get help about report command.")
-                        .executes(context -> sendHelpMessage(context.getSource()))
+                    //.executes(context -> sendHelpMessage(context.getSource()))
+                    .then(HelpfulLiteralBuilder.literal("hulp")
+                        .withHelpText("Get hulp about report command.")
+                        .requires(commandSender -> commandSender.hasPermission("help"))
+                        .executes(context -> sendHelpMessage(context.getSource())))
+                    .then(HelpfulLiteralBuilder.literal("holp")
+                        //.withHelpText("Get holp about report command.")
+                        .requires(commandSender -> commandSender.hasPermission("holp"))
+                        .executes(context -> sendHelpMessage(context.getSource())))
                     .then(HelpfulRequiredArgumentBuilder.argument("player", new PlayerArgument())
-                        .withUsageText("Player needs to be online.")
+                        .withTooltip("Name of the player who behaved inappropriate.")
+                        .requires(commandSender -> commandSender.hasPermission("player"))
                         .then(HelpfulRequiredArgumentBuilder.argument("reason", greedyString())
                             .suggests((context,suggestionsBuilder) ->
                                 suggestionsBuilder.suggest("Enter your reason to report "+context.getArgument("player",String.class)).buildFuture())
                             .executes(context -> sendReport(context.getSource(), context.getArgument("player",String.class),
-                                                            context.getArgument("reason", String.class)))))));
+                                                            context.getArgument("reason", String.class)))))
+                    .then(HelpfulRequiredArgumentBuilder.argument("ployer", new PlayerArgument())
+                        .requires(commandSender -> commandSender.hasPermission("ployer"))
+                        .then(HelpfulRequiredArgumentBuilder.argument("reason", greedyString())
+                            .withTooltip("Reason of your report.")
+                            .suggests((context,suggestionsBuilder) ->
+                                suggestionsBuilder.suggest("Explain why you report "+context.getArgument("ployer",String.class)).buildFuture())
+                            .executes(context -> sendReport(context.getSource(), context.getArgument("ployer",String.class),
+                                context.getArgument("reason", String.class))))));
     }
 
     private int sendReport(CommandSender commandSender, String player, String reason) {

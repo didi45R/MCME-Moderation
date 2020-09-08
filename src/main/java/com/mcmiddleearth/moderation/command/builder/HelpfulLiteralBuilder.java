@@ -7,19 +7,26 @@ import net.md_5.bungee.api.CommandSender;
 
 public class HelpfulLiteralBuilder extends LiteralArgumentBuilder<CommandSender> {
 
-    private String usageText;
+    private String helpText;
+    private String tooltip;
 
     protected HelpfulLiteralBuilder(String literal) {
         super(literal);
-        usageText = literal;
+        helpText = "";
+        tooltip = "";
     }
 
     public static HelpfulLiteralBuilder literal(final String name) {
         return new HelpfulLiteralBuilder(name);
     }
 
-    public HelpfulLiteralBuilder withUsageText(String usageText) {
-        this.usageText = usageText;
+    public HelpfulLiteralBuilder withHelpText(String helpText) {
+        this.helpText = helpText;
+        return getThis();
+    }
+
+    public HelpfulLiteralBuilder withTooltip(String tooltip) {
+        this.tooltip = tooltip;
         return getThis();
     }
 
@@ -31,7 +38,7 @@ public class HelpfulLiteralBuilder extends LiteralArgumentBuilder<CommandSender>
     @Override
     public HelpfulLiteralNode build() {
         final HelpfulLiteralNode result = new HelpfulLiteralNode(getLiteral(), getCommand(), getRequirement(), getRedirect(), getRedirectModifier(),
-                                                   isFork(), usageText);
+                                                   isFork(), helpText, tooltip);
 
         for (final CommandNode<CommandSender> argument : getArguments()) {
             result.addChild(argument);

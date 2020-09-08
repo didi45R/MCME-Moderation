@@ -12,29 +12,52 @@ import net.md_5.bungee.api.CommandSender;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Predicate;
+import java.util.logging.Logger;
 
-public class HelpfulLiteralNode extends LiteralCommandNode<CommandSender> {
+public class HelpfulLiteralNode extends LiteralCommandNode<CommandSender> implements HelpfulNode {
 
-    private final String usageText;
+    private String helpText;
+    private final String tooltip;
 
     public HelpfulLiteralNode(String literal, Command<CommandSender> command, Predicate<CommandSender> requirement,
                               CommandNode<CommandSender> redirect, RedirectModifier<CommandSender> modifier,
-                              boolean forks, String usageText) {
+                              boolean forks, String helpText, String tooltip) {
         super(literal, command, requirement, redirect, modifier, forks);
-        this.usageText = usageText;
+        this.helpText = helpText;
+        this.tooltip = tooltip;
     }
 
     @Override
-    public String getUsageText() {
-        return usageText;
+    public String getTooltip() {
+        return tooltip;
+    }
+
+    @Override
+    public String getHelpText() {
+        return helpText;
+    }
+
+    @Override
+    public void setHelpText(String helpText) {
+        this.helpText = helpText;
     }
 
     @Override
     public CompletableFuture<Suggestions> listSuggestions(CommandContext<CommandSender> context, SuggestionsBuilder builder) {
         if (canUse(context.getSource()) && getLiteral().toLowerCase().startsWith(builder.getRemaining().toLowerCase())) {
-            return builder.suggest(getLiteral(),new LiteralMessage(getUsageText())).buildFuture();
+            return builder.suggest(getLiteral(),new LiteralMessage(getHelpText())).buildFuture();
         } else {
             return Suggestions.empty();
+        }
+    }
+
+    @Override
+    public void addChild(CommandNode<CommandSender> node) {
+        super.addChild(node);
+        CommandNode<CommandSender> child = getChildren().stream().filter(search -> search.getName().equals(node.getName()))
+                .findFirst().orElse(null);
+        if(node instanceof HelpfulNode && child instanceof HelpfulNode) {
+             ((HelpfulNode)child).setHelpText(helpText);
         }
     }
 }

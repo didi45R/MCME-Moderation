@@ -15,20 +15,33 @@ import net.md_5.bungee.api.CommandSender;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Predicate;
+import java.util.logging.Logger;
 
-public class HelpfulArgumentNode extends ArgumentCommandNode<CommandSender, String> {
+public class HelpfulArgumentNode extends ArgumentCommandNode<CommandSender, String> implements HelpfulNode {
 
-    private final String usageText;
+    private String helpText;
+    private String tooltip;
 
     public HelpfulArgumentNode(String name, ArgumentType<String> type, Command<CommandSender> command, Predicate<CommandSender> requirement,
                                CommandNode<CommandSender> redirect, RedirectModifier<CommandSender> modifier, boolean forks,
-                               SuggestionProvider<CommandSender> customSuggestions, String usageText) {
+                               SuggestionProvider<CommandSender> customSuggestions, String helpText, String tooltip) {
         super(name, type, command, requirement, redirect, modifier, forks, customSuggestions);
-        this.usageText = usageText;
+        this.helpText = helpText;
     }
 
-    public String getUsageText() {
-        return usageText;
+    @Override
+    public String getTooltip() {
+        return tooltip;
+    }
+
+    @Override
+    public String getHelpText() {
+        return helpText;
+    }
+
+    @Override
+    public void setHelpText(String helpText) {
+        this.helpText = helpText;
     }
 
     @Override
@@ -36,7 +49,7 @@ public class HelpfulArgumentNode extends ArgumentCommandNode<CommandSender, Stri
         if(canUse(context.getSource())) {
             if (getCustomSuggestions() == null) {
                 if (getType() instanceof HelpfulArgument) {
-                    return ((HelpfulArgument) getType()).listSuggestions(context, builder, usageText);
+                    return ((HelpfulArgument) getType()).listSuggestions(context, builder, helpText);
                 } else {
                     return getType().listSuggestions(context, builder);
                 }
@@ -47,5 +60,14 @@ public class HelpfulArgumentNode extends ArgumentCommandNode<CommandSender, Stri
         return Suggestions.empty();
     }
 
+    @Override
+    public void addChild(CommandNode<CommandSender> node) {
+        super.addChild(node);
+        CommandNode<CommandSender> child = getChildren().stream().filter(search -> search.getName().equals(node.getName()))
+                .findFirst().orElse(null);
+        if(child instanceof HelpfulNode) {
+            ((HelpfulNode)child).setHelpText(helpText);
+        }
+    }
 
 }

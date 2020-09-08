@@ -2,6 +2,7 @@ package com.mcmiddleearth.moderation.command.builder;
 
 import com.mcmiddleearth.moderation.command.node.HelpfulArgumentNode;
 import com.mojang.brigadier.arguments.ArgumentType;
+import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import com.mojang.brigadier.tree.ArgumentCommandNode;
@@ -9,7 +10,8 @@ import com.mojang.brigadier.tree.CommandNode;
 import net.md_5.bungee.api.CommandSender;
 
 public class HelpfulRequiredArgumentBuilder extends ArgumentBuilder<CommandSender, HelpfulRequiredArgumentBuilder> {
-    private String usageText;
+    private String helpText;
+    private String tooltip;
     private final String name;
     private final ArgumentType<String> type;
     private SuggestionProvider<CommandSender> suggestionsProvider = null;
@@ -17,7 +19,8 @@ public class HelpfulRequiredArgumentBuilder extends ArgumentBuilder<CommandSende
     private HelpfulRequiredArgumentBuilder(final String name, final ArgumentType<String> type) {
         this.name = name;
         this.type = type;
-        this.usageText = name;
+        this.helpText = "";
+        this.tooltip = "";
     }
 
     public static HelpfulRequiredArgumentBuilder argument(final String name, final ArgumentType<String> type) {
@@ -29,8 +32,13 @@ public class HelpfulRequiredArgumentBuilder extends ArgumentBuilder<CommandSende
         return getThis();
     }
 
-    public HelpfulRequiredArgumentBuilder withUsageText(String usageText) {
-        this.usageText = usageText;
+    public HelpfulRequiredArgumentBuilder withHelpText(String helpText) {
+        this.helpText = helpText;
+        return getThis();
+    }
+
+    public HelpfulRequiredArgumentBuilder withTooltip(String tooltip) {
+        this.tooltip = tooltip;
         return getThis();
     }
 
@@ -54,7 +62,7 @@ public class HelpfulRequiredArgumentBuilder extends ArgumentBuilder<CommandSende
     public ArgumentCommandNode<CommandSender, String> build() {
         final ArgumentCommandNode<CommandSender, String> result = new HelpfulArgumentNode(getName(), getType(), getCommand(),
                                                                     getRequirement(), getRedirect(), getRedirectModifier(),
-                                                                    isFork(), getSuggestionsProvider(), usageText);
+                                                                    isFork(), getSuggestionsProvider(), helpText, tooltip);
 
         for (final CommandNode<CommandSender> argument : getArguments()) {
             result.addChild(argument);

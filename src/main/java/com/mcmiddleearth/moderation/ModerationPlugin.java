@@ -33,6 +33,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -51,7 +52,7 @@ public class ModerationPlugin extends Plugin implements Listener {
     private static File configFile;
 
     private CommandDispatcher<CommandSender> commandDispatcher;
-    private Set<ModerationPluginCommand> commands;
+    private Set<ModerationPluginCommand> commands = new HashSet<>();
 
     private WatchlistManager watchlistManager;
 
@@ -84,7 +85,7 @@ public class ModerationPlugin extends Plugin implements Listener {
     @EventHandler
     public void onTabComplete(TabCompleteEvent event) {
         for (ModerationPluginCommand command : commands) {
-            if (event.getCursor().startsWith(command.getName())) {
+            if (event.getCursor().startsWith("/"+command.getName())) {
                 command.onTabComplete(event);
                 return;
             }
