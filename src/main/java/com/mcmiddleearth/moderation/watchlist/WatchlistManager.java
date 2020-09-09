@@ -20,8 +20,10 @@ import com.mcmiddleearth.moderation.ModerationPlugin;
 import com.mcmiddleearth.moderation.configuration.YamlBridge;
 
 import java.io.File;
-import java.text.DateFormat;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * @author Eriol_Eandur
@@ -29,15 +31,6 @@ import java.util.*;
 
 public class WatchlistManager {
 
-    public static void main(String[] args) {
-        System.out.println(DateFormat.getDateTimeInstance(DateFormat.DEFAULT,DateFormat.DEFAULT,Locale.US).format(Calendar.getInstance().getTime()));
-        WatchlistManager manager = new WatchlistManager();
-        WatchlistReason reason = new WatchlistReason(Calendar.getInstance().getTime(),"test",UUID.randomUUID(),true);
-        WatchlistPlayerData playerData = new WatchlistPlayerData(reason);
-        manager.watchlist.put(UUID.randomUUID(),playerData);
-        manager.saveToFile();
-        System.out.println("done");
-    }
     private final Map<UUID,WatchlistPlayerData> watchlist = new HashMap<>();
 
     private final File dataFile = new File(ModerationPlugin.getInstance().getDataFolder(),"watchlist.yml");
@@ -52,6 +45,9 @@ public class WatchlistManager {
             yaml.getMap().forEach((uuid, data) -> watchlist.put(UUID.fromString(uuid), new WatchlistPlayerData((List<Map<String, Object>>) data)));
         }
     }
+
+    //TODO: methods to manage watchlist entries
+
     /**
      * This method is required for TabList feature in MCME-Connect plugin
      * @param player Player to check

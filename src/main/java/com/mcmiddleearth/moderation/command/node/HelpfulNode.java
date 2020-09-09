@@ -2,10 +2,10 @@ package com.mcmiddleearth.moderation.command.node;
 
 public interface HelpfulNode {
 
-    public String getTooltip();
+    String getTooltip();
 
-    public String getHelpText();
+    String getHelpText();
 
-    public void setHelpText(String helpText);
+    void setHelpText(String helpText);
 
 }

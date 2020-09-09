@@ -17,6 +17,7 @@
 package com.mcmiddleearth.moderation.command.handler;
 
 
+import com.mcmiddleearth.moderation.command.builder.HelpfulLiteralBuilder;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.md_5.bungee.api.ChatColor;
@@ -35,20 +36,10 @@ public class WatchlistCommandHandler extends AbstractCommandHandler {
 
     public WatchlistCommandHandler(String name, CommandDispatcher<CommandSender> dispatcher) {
         super(name);
-        dispatcher.register(LiteralArgumentBuilder.<CommandSender>literal(name)
-            .executes(context -> {
-                sendHelpMessage(context.getSource());
-                return 0;
-                }));
+        dispatcher.register(HelpfulLiteralBuilder.literal(name)
+            //TODO
+            );
     }
 
-    private void sendHelpMessage(CommandSender commandSender) {
-        if(commandSender instanceof ProxiedPlayer) {
-            commandSender.sendMessage(new ComponentBuilder("/watchlist")
-                    .color(ChatColor.GREEN).create());
-        } else {
-            Logger.getLogger(WatchlistCommandHandler.class.getSimpleName()).info("/watchlist");
-        }
-    }
 
 }

@@ -9,6 +9,6 @@ import java.util.concurrent.CompletableFuture;
 
 public interface HelpfulArgument extends ArgumentType<String> {
 
-    public <S> CompletableFuture<Suggestions> listSuggestions(final CommandContext<S> context, final SuggestionsBuilder builder, String usageText);
+    <S> CompletableFuture<Suggestions> listSuggestions(final CommandContext<S> context, final SuggestionsBuilder builder, String tooltip);
 
 }

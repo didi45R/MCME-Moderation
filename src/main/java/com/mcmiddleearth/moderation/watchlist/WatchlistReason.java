@@ -52,8 +52,8 @@ public class WatchlistReason {
 
     /**
      * Constructor to load data from watchlist.yml
-     * @param data
-     * @throws ParseException
+     * @param data read from watchlist.yml by YamlBridge class
+     * @throws ParseException thrown when date in watchlist.yml is not readable
      */
     public WatchlistReason(Map<String,Object> data) throws ParseException {
         this(DateFormat.getDateTimeInstance(DateFormat.DEFAULT,DateFormat.DEFAULT,Locale.US).parse((String) data.get("creationTime")),
@@ -77,6 +77,10 @@ public class WatchlistReason {
         return byModerator;
     }
 
+    /**
+     * Required to save data to watchlist.yml
+     * @return
+     */
     public Map<String,Object> serialize() {
         Map<String,Object> result = new HashMap<>();
         result.put("creationTime", DateFormat.getDateTimeInstance(DateFormat.DEFAULT,DateFormat.DEFAULT,Locale.US).format(creationTime));

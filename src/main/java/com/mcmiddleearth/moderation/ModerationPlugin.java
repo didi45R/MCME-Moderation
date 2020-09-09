@@ -51,8 +51,8 @@ public class ModerationPlugin extends Plugin implements Listener {
     private static ModerationConfig config;
     private static File configFile;
 
-    private CommandDispatcher<CommandSender> commandDispatcher;
-    private Set<ModerationPluginCommand> commands = new HashSet<>();
+    private final CommandDispatcher<CommandSender> commandDispatcher = new CommandDispatcher<>();
+    private final Set<ModerationPluginCommand> commands = new HashSet<>();
 
     private WatchlistManager watchlistManager;
 
@@ -62,7 +62,6 @@ public class ModerationPlugin extends Plugin implements Listener {
         configFile = new File(getDataFolder(),"config.yml");
         saveDefaultConfig();
         config = new ModerationConfig(configFile);
-        commandDispatcher =  new CommandDispatcher<>();
 
         commands.add(new ModerationPluginCommand(commandDispatcher,
                 new WatchlistCommandHandler("watchlist", commandDispatcher)));
@@ -82,6 +81,7 @@ public class ModerationPlugin extends Plugin implements Listener {
         //maybe TODO: e.g. cancel scheduled tasks.
     }
 
+    @SuppressWarnings("unused")
     @EventHandler
     public void onTabComplete(TabCompleteEvent event) {
         for (ModerationPluginCommand command : commands) {
@@ -94,7 +94,9 @@ public class ModerationPlugin extends Plugin implements Listener {
 
     private void saveDefaultConfig() {
         if(!getDataFolder().exists()) {
-            getDataFolder().mkdir();
+            if(!getDataFolder().mkdir()) {
+                Logger.getLogger(ModerationPlugin.class.getName()).log(Level.WARNING, "Creation of plugin data folder failed!");
+            }
         }
         if(!configFile.exists()) {
             try {

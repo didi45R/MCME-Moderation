@@ -26,8 +26,6 @@ import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
-import org.bukkit.entity.HumanEntity;
-import sun.swing.AccumulativeRunnable;
 
 import java.util.Collection;
 import java.util.concurrent.CompletableFuture;
@@ -57,7 +55,6 @@ public class PlayerArgument implements HelpfulArgument {
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(final CommandContext<S> context, final SuggestionsBuilder builder) {
-        Logger.getGlobal().info("CommandPlayerArgument Start");
         for (String option : ProxyServer.getInstance().getPlayers().stream().map(ProxiedPlayer::getName).collect(Collectors.toSet())) {
             if (option.toLowerCase().startsWith(builder.getRemaining().toLowerCase())) {
                 builder.suggest(option);
@@ -66,11 +63,10 @@ public class PlayerArgument implements HelpfulArgument {
         return builder.buildFuture();
     }
 
-    public <S> CompletableFuture<Suggestions> listSuggestions(final CommandContext<S> context, final SuggestionsBuilder builder, String usageText) {
-        Logger.getGlobal().info("CommandPlayerArgument Start");
+    public <S> CompletableFuture<Suggestions> listSuggestions(final CommandContext<S> context, final SuggestionsBuilder builder, String tooltip) {
         for (String option : ProxyServer.getInstance().getPlayers().stream().map(ProxiedPlayer::getName).collect(Collectors.toSet())) {
             if (option.toLowerCase().startsWith(builder.getRemaining().toLowerCase())) {
-                builder.suggest(option, new LiteralMessage(usageText));
+                builder.suggest(option, new LiteralMessage(tooltip));
             }
         }
         return builder.buildFuture();

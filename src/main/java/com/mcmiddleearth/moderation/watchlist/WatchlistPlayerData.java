@@ -35,7 +35,7 @@ public class WatchlistPlayerData {
 
     /**
      * Constructor to read data from watchlist.yml
-     * @param data
+     * @param data from the watchlist.yml
      */
     public WatchlistPlayerData(List<Map<String,Object>> data) {
         data.forEach(reason -> {
@@ -46,6 +46,8 @@ public class WatchlistPlayerData {
             }
         });
     }
+
+    //TODO: methods to manage watchlist entries
 
     /**
      * Required to save data to watchlist.yml

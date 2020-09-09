@@ -15,18 +15,18 @@ import net.md_5.bungee.api.CommandSender;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Predicate;
-import java.util.logging.Logger;
 
 public class HelpfulArgumentNode extends ArgumentCommandNode<CommandSender, String> implements HelpfulNode {
 
     private String helpText;
-    private String tooltip;
+    private final String tooltip;
 
     public HelpfulArgumentNode(String name, ArgumentType<String> type, Command<CommandSender> command, Predicate<CommandSender> requirement,
                                CommandNode<CommandSender> redirect, RedirectModifier<CommandSender> modifier, boolean forks,
                                SuggestionProvider<CommandSender> customSuggestions, String helpText, String tooltip) {
         super(name, type, command, requirement, redirect, modifier, forks, customSuggestions);
         this.helpText = helpText;
+        this.tooltip = tooltip;
     }
 
     @Override
@@ -49,7 +49,7 @@ public class HelpfulArgumentNode extends ArgumentCommandNode<CommandSender, Stri
         if(canUse(context.getSource())) {
             if (getCustomSuggestions() == null) {
                 if (getType() instanceof HelpfulArgument) {
-                    return ((HelpfulArgument) getType()).listSuggestions(context, builder, helpText);
+                    return ((HelpfulArgument) getType()).listSuggestions(context, builder, tooltip);
                 } else {
                     return getType().listSuggestions(context, builder);
                 }

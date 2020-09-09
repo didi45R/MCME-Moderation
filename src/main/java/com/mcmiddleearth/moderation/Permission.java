@@ -21,6 +21,7 @@ package com.mcmiddleearth.moderation;
  * @author Eriol_Eandur
  */
 
+@SuppressWarnings("SpellCheckingInspection")
 public class Permission {
 
     public static final String WATCHLIST = "mcmemoderation.watchlist";

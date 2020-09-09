@@ -12,7 +12,6 @@ import net.md_5.bungee.api.CommandSender;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Predicate;
-import java.util.logging.Logger;
 
 public class HelpfulLiteralNode extends LiteralCommandNode<CommandSender> implements HelpfulNode {
 

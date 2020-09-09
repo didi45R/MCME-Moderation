@@ -28,7 +28,23 @@ public class ModerationConfig extends YamlBridge {
         load(configFile);
     }
 
-    public boolean isReportNotificationIngame() {
-        return getBoolean("report.ingame", true);
+    public boolean isReportSendIngame() {
+        return getBoolean("report.sendIngame", true);
     }
+    public boolean isReportSendDiscord() {
+        return getBoolean("report.sendDiscord", true);
+    }
+    public String getReportDiscordChannel() { return getString("report.discordChannel", "reports"); }
+    public String getReportDiscordRole() { return getString("report.discordRole", "Moderator"); }
+    public boolean isReportPingModerators() { return getBoolean("report.pingModerators", false); }
+    public boolean isReportAddToWatchlist() { return getBoolean("report.addToWatchlist", true); }
+
+    public boolean isWatchlistPlayerJoinNotification() { return getBoolean("watchlist.playerJoinNotification", true); }
+    public boolean isWatchlistSendIngame() { return getBoolean("watchlist.sendIngame", true); }
+    public boolean isWatchlistSendDiscord() { return getBoolean("watchlist.sendDiscord", true); }
+    public String getWatchlistDiscordChannel() { return getString("watchlist.discordChannel", "reports"); }
+    public boolean isWatchlistPingModerators() { return getBoolean("watchlist.pingModerators", false); }
+    public String getWatchlistTablistPrefix() { return getString("watchlist.tabListPrefix", "#ff8866W"); }
+
+    //TODO: Add other configuration data (also add to config.yml in resources)
 }

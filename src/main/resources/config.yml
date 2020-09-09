@@ -2,6 +2,7 @@ report:
   sendIngame: true
   sendDiscord: true
   discordChannel: reports
+  discordRole: Moderator
   pingModerators: false
   addToWatchlist: true
 watchlist:

@@ -32,6 +32,8 @@ import java.util.Map;
  *
  * @author Eriol_Eandur
  */
+
+@SuppressWarnings({"unchecked","unused"})
 public class YamlBridge {
     
     private Map<String,Object> map = new HashMap<>();
