@@ -60,7 +60,7 @@ public class ReportCommandHandler extends AbstractCommandHandler {
 
     private int sendReport(CommandSender commandSender, String player, String reason) {
         BaseComponent[] message = new ComponentBuilder(commandSender.getName()).color(ChatColor.YELLOW).bold(true).italic(true)
-                .append("reported player ").color(ChatColor.GOLD).bold(false).italic(false)
+                .append(" reported player ").color(ChatColor.GOLD).bold(false).italic(false)
                 .append(player).color(ChatColor.YELLOW).bold(true).italic(true)
                 .append("\nReason: ").color(ChatColor.GOLD).bold(false).italic(false)
                 .append(reason).color(ChatColor.YELLOW).bold(true).italic(true).create();
